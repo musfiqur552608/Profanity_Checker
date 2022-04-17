@@ -31,6 +31,7 @@ def home(request):
 #This is main function where we done everything for checking profan words
 def check(request):
     try:
+        profanity.load_censor_words_from_file(path)
         if request.method == 'POST':
             #this segment for working with file
             if request.FILES:
@@ -91,5 +92,24 @@ def check(request):
         return HttpResponse("Opps...!\nSomething else went wrong.")
 
 
-
+def add(request):
+    profanity.load_censor_words_from_file(path)
+    try:
+        if request.method == 'POST':
+            
+            #this segment for working with text
+            text = request.POST['add']
+            with open("check\mywordlist.txt", "a+") as file_object:
+                # Move read cursor to the start of file.
+                file_object.seek(0)
+                # If file is not empty then append '\n'
+                data = file_object.read(100)
+                if len(data) > 0 :
+                    file_object.write("\n")
+                # Append text at the end of file
+                file_object.write(text)
+            
+        return render(request, 'index.html')
+    except:
+        return HttpResponse("Opps...!\nSomething else went wrong.")
 

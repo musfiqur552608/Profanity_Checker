@@ -29,7 +29,7 @@
       </div>
       <button type="submit"  class="btn btn-outline-primary">Submit</button>
     </form> <br> <br>
-      <div class="row">
+      <div class="row" style="margin-left: 3px;">
         <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
           <!-- Here we put the text which was got by input-->
           <div class="card-header">Entered Text</div>
@@ -56,6 +56,18 @@
         </div>
       </div>
   </div>
+  <div class="container my-4">
+    <form class="row g-3" action="/add" id="form1" method="POST" enctype="multipart/form-data">
+      <label for="title" class="form-label">Enter profan word here:</label>
+      {% csrf_token %}
+      <div class="col-auto">
+        <input type="text" class="form-control" name="add" id="profan" placeholder="Enter Your Profan Word">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Add</button>
+      </div>
+    </form>
+  </div>
 
   
   <!-- Optional JavaScript; choose one of the two! -->
@@ -67,6 +79,7 @@
   <!--Exception Handling-->
   <script>
     document.getElementById("form").addEventListener('submit', error)
+    document.getElementById("form1").addEventListener('submit', error1)
     function error(event){
       const file = document.getElementById("file").value  
       const text = document.getElementById("text").value
@@ -77,6 +90,17 @@
       else if(text && file ){
         event.preventDefault()
         alert('Sorry...! \nYou should choose only one option between file or text.')
+      }
+      else if(profan==''){
+        event.preventDefault()
+        alert('Sorry...! \nYou must write a profan word.')
+      }
+    }
+    function error1(event){
+      const profan = document.getElementById("profan").value
+      if(profan==''){
+        event.preventDefault()
+        alert('Sorry...! \nYou must write a profan word.')
       }
     }
   </script>
